@@ -1,0 +1,121 @@
+syntax="proto2";
+
+service Sistema{
+  rpc VerifHome (SolicitudHome) returns (RespuestaHome) {}
+  rpc Login (SolicitudLogin) returns (RespuestaLogin) {}
+  rpc Create (SolicitudCreate) returns (RespuestaCreate) {}
+  rpc Read (SolicitudRead) returns (stream RespuestaRead) {}
+  rpc Write (SolicitudWrite) returns (RespuestaWrite) {}
+  rpc Rename (SolicitudRename) returns (RespuestaRename) {}
+  rpc Remove (SolicitudRemove) returns (RespuestaRemove) {}
+  rpc Mkdir (SolicitudMkdir) returns (RespuestaMkdir) {}
+  rpc Rmdir (SolicitudRmdir) returns (RespuestaRmdir) {}
+  rpc Readdir (SolicitudReaddir) returns (stream RespuestaReaddir) {}
+}
+
+message SolicitudHome{
+  required string nombre = 1;
+}
+
+message RespuestaHome{
+  required string ruta = 1;
+}
+
+message SolicitudLogin{
+  required string nombre = 2;
+  required string contra = 3;
+}
+
+message RespuestaLogin{
+  optional string conf = 1;
+  required string codigo = 2;
+}
+
+// El mensaje de solicitud contiene el nombre del archivo a crear
+message SolicitudCreate {
+  required string nombre = 1;
+  required string ruta = 2;
+}
+
+//El mensaje de respuesta contiene un mensaje de confirmación
+message RespuestaCreate {
+  optional string conf = 1;
+}
+
+// El mensaje de solicitud contiene el nombre del archivo a leer
+message SolicitudRead {
+  required string nombre = 1;
+  required string ruta = 2;
+}
+
+//El mensaje de respuesta contiene el contenido del archivo
+message RespuestaRead {
+  optional string contenido = 1;
+}
+
+// El mensaje de solicitud contiene el nombre del archivo a editar y el contenido
+message SolicitudWrite {
+  required string nombre = 1;
+  required string contenido = 2;
+  required string ruta = 3;
+}
+
+//El mensaje de respuesta contiene un mensaje de confirmación
+message RespuestaWrite {
+  optional string conf = 1;
+}
+
+// El mensaje de solicitud contiene el nombre del archivo a renombrar y el nuevo nombre
+message SolicitudRename {
+  required string nombreOld = 1;
+  required string nombreNew = 2;
+  required string ruta = 3;
+}
+
+//El mensaje de respuesta contiene un mensaje de confirmación
+message RespuestaRename {
+  optional string conf = 1;
+}
+
+// El mensaje de solicitud contiene el nombre del archivo a remover
+message SolicitudRemove {
+  required string nombre = 1;
+  required string ruta = 2;
+}
+
+//El mensaje de respuesta contiene un mensaje de confirmación
+message RespuestaRemove {
+  optional string conf = 1;
+}
+
+// El mensaje de solicitud contiene el nombre de la carpeta a crear
+message SolicitudMkdir {
+  required string nombre = 1;
+  required string ruta = 2;
+}
+
+//El mensaje de respuesta contiene un mensaje de confirmación
+message RespuestaMkdir {
+  optional string conf = 1;
+}
+
+// El mensaje de solicitud contiene el nombre de la carpeta a eliminar
+message SolicitudRmdir {
+  required string nombre = 1;
+  required string ruta = 2;
+}
+
+//El mensaje de respuesta contiene un mensaje de confirmación
+message RespuestaRmdir {
+  optional string conf = 1;
+}
+
+// El mensaje de solicitud contiene la ruta del directorio a leer
+message SolicitudReaddir {
+  required string ruta = 1;
+}
+
+//El mensaje de respuesta contiene la lista de directorios
+message RespuestaReaddir {
+  optional string item = 1;
+}
